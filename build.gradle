@@ -1,0 +1,29 @@
+buildscript{
+    dependencies {
+        classpath files("libs/gradle-frege-plugin.jar") // plugin from https://github.com/galderz/gradle-frege-plugin
+    }
+}
+
+
+apply plugin: 'java'
+apply plugin: 'frege'
+apply plugin: "application"
+
+
+mainClassName = "eu.lestard.frege.HelloWorld"
+jar.manifest.attributes("Main-Class" : mainClassName)
+
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile 'com.theoryinpractise.frege:frege:3.22.324-g630677b'
+}
+
+compileFrege {
+  outputDir = project.file("$buildDir/classes/main")
+}
+
+tasks.classes.dependsOn(compileFrege)
